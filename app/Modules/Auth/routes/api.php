@@ -6,5 +6,6 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'auth',
 ], function() {
-    Route::get('test', [AuthController::class, 'test']);
+    Route::get('signup', [AuthController::class, 'signup']);
+    Route::get('signin', [AuthController::class, 'signin']);
 });

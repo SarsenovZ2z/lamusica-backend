@@ -4,10 +4,10 @@ namespace App\Modules\Auth;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Modules\Auth\Contracts\AuthenticatableDataSource;
-use App\Modules\Auth\Contracts\AuthRepository;
-use App\Modules\Auth\DataSources\AuthenticatableEloquentDataSource;
-use App\Modules\Auth\Repositories\AuthRepositoryImpl;
+use App\Modules\Auth\Data\Datasources\AuthenticatableDataSource;
+use App\Modules\Auth\Data\Datasources\AuthenticatableEloquentDataSource;
+use App\Modules\Auth\Data\Repositories\AuthRepositoryImpl;
+use App\Modules\Auth\Domain\Repositories\AuthRepository;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

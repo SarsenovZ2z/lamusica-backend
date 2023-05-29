@@ -11,9 +11,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    public $bindings = [
-        \App\Modules\Auth\Contracts\AuthenticatableModel::class => \App\Models\User::class,
-    ];
+    public $bindings = [];
 
     /**
      * Register any application services.

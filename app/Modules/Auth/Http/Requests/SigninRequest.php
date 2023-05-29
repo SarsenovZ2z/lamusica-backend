@@ -24,6 +24,7 @@ class SigninRequest extends FormRequest
         return [
             'email' => 'required|email',
             'password' => 'required',
+            'deviceName' => 'string|max_size:100',
         ];
     }
 }

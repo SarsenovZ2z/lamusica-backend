@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\Auth\Usecases;
+namespace App\Modules\Auth\Domain\Usecases;
 
-use App\Modules\Auth\Contracts\AuthRepository;
+use App\Modules\Auth\Domain\Repositories\AuthRepository;
 
-class Signin
+class Signup
 {
 
     public function __construct(
@@ -12,10 +12,10 @@ class Signin
     ) {
     }
 
-    public function __invoke(SigninDTO $params)
+    public function __invoke(SignupDTO $params)
     {
         return $this->authRepository
-            ->signin(
+            ->signup(
                 email: $params->email,
                 password: $params->password,
             );

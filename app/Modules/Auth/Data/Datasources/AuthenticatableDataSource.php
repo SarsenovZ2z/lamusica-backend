@@ -10,7 +10,7 @@ interface AuthenticatableDataSource
 
     public function getUserByEmail(
         string $email,
-    ):? AuthenticatableModel;
+    ): ?AuthenticatableModel;
 
     public function createUser(
         string $email,
@@ -21,4 +21,9 @@ interface AuthenticatableDataSource
         AuthenticatableModel $authenticatable,
         string $tokenName,
     ): AuthToken;
+
+    public function deleteAllAuthTokens(
+        AuthenticatableModel $authenticatable,
+        array $except = [],
+    ): void;
 }

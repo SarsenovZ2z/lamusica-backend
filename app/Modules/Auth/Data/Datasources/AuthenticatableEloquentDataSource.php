@@ -42,4 +42,13 @@ class AuthenticatableEloquentDataSource implements AuthenticatableDataSource
                 ->createToken($tokenName)
         );
     }
+
+    public function deleteAllAuthTokens(
+        AuthenticatableModel $authenticatable,
+        array $except = [],
+    ): void {
+        $authenticatable->tokens()
+            ->whereNotIn('id', $except)
+            ->delete();
+    }
 }

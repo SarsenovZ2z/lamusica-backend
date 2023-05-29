@@ -48,6 +48,9 @@ class AuthRepositoryImpl implements AuthRepository
             throw new InvalidCredentialsException();
         }
 
+        $this->authenticatableDataSource
+            ->deleteAllAuthTokens($user);
+        
         return $this->authenticatableDataSource
             ->createAuthToken(
                 authenticatable: $user,

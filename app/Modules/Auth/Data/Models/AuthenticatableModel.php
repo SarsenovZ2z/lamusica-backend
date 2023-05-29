@@ -2,8 +2,12 @@
 
 namespace App\Modules\Auth\Data\Models;
 
-interface AuthenticatableModel
-{
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
-    public function createToken(string $name);
+abstract class AuthenticatableModel extends Authenticatable 
+{
+    use HasApiTokens;
+
 }

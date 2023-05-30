@@ -6,6 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Modules\Audio\Data\Models\PlaylistAdapter;
 use App\Modules\Audio\Domain\Usecases\CreatePlaylist;
 use App\Modules\Audio\Domain\Usecases\CreatePlaylistDTO;
+use App\Modules\Audio\Domain\Usecases\DeletePlaylist;
+use App\Modules\Audio\Domain\Usecases\DeletePlaylistDTO;
+use App\Modules\Audio\Domain\Usecases\GetPlaylist;
+use App\Modules\Audio\Domain\Usecases\GetPlaylistDTO;
+use App\Modules\Audio\Domain\Usecases\GetPlaylists;
+use App\Modules\Audio\Domain\Usecases\GetPlaylistsDTO;
 use App\Modules\Audio\Domain\Usecases\UpdatePlaylist;
 use App\Modules\Audio\Domain\Usecases\UpdatePlaylistDTO;
 use App\Modules\Audio\Http\Requests\CreatePlaylistRequest;
@@ -14,15 +20,6 @@ use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
-
-    public function index(Request $request)
-    {
-        $user = $request->user() ?? \App\Models\User::first();
-    }
-
-    public function show(Request $request, int $id)
-    {
-    }
 
     public function store(
         CreatePlaylistRequest $request,
@@ -38,6 +35,34 @@ class PlaylistController extends Controller
                 )
             ),
             201
+        );
+    }
+
+    public function index(
+        Request $request,
+        GetPlaylists $getPlaylists,
+    ) {
+        return response()->json(
+            $getPlaylists(
+                new GetPlaylistsDTO(
+                    user: $request->user(),
+                )
+            )
+        );
+    }
+
+    public function show(
+        Request $request,
+        GetPlaylist $getPlaylist,
+    ) {
+        return response()->json(
+            PlaylistAdapter::toArray(
+                $getPlaylist(
+                    new GetPlaylistDTO(
+                        id: $request->playlist,
+                    )
+                )
+            )
         );
     }
 
@@ -57,7 +82,14 @@ class PlaylistController extends Controller
         );
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(
+        Request $request,
+        DeletePlaylist $deletePlaylist,
+    ) {
+        $deletePlaylist(
+            new DeletePlaylistDTO(
+                id: $request->playlist,
+            )
+        );
     }
 }

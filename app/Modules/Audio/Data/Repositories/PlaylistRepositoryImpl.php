@@ -27,14 +27,16 @@ class PlaylistRepositoryImpl implements PlaylistRepository
             );
     }
 
-    public function getPlaylists(HasPlaylists $user): Collection
-    {
+    public function getPlaylists(
+        HasPlaylists $user,
+    ): Collection {
         return $this->playlistDataSource
             ->getPlaylists($user);
     }
 
-    public function getPlaylist(int $id): Playlist
-    {
+    public function getPlaylist(
+        int $id,
+    ): Playlist {
         return $this->playlistDataSource
             ->getPlaylist($id);
     }
@@ -50,9 +52,10 @@ class PlaylistRepositoryImpl implements PlaylistRepository
             );
     }
 
-    public function delete(Playlist $playlist): void
-    {
+    public function delete(
+        int $id,
+    ): void {
         $this->playlistDataSource
-            ->delete($playlist->id);
+            ->delete($id);
     }
 }

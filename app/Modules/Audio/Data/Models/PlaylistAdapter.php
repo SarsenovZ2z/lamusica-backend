@@ -13,9 +13,9 @@ class PlaylistAdapter
         return new Playlist(
             id: $playlist->id,
             name: $playlist->name,
-            audios: $playlist->audios
-                ?->map(function ($audio) {
-                    return AudioAdapter::fromModel($audio);
+            audios: $playlist->userAudios
+                ?->map(function ($userAudio) {
+                    return AudioAdapter::fromModel($userAudio->audio);
                 }),
         );
     }

@@ -53,12 +53,13 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         HasPlaylists $user,
     ): Collection {
 
-        Gate::authorize('viewAny');
+        Gate::authorize('viewAny', $this->model);
 
         return $this->model
             ->where('user_id', $user->id)
             ->get()
             ->map(function ($playlist) {
+                Gate::authorize('view', $playlist);
                 return PlaylistAdapter::fromModel($playlist);
             })
             ->values();
@@ -74,7 +75,7 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         Gate::authorize('view', $playlist);
 
         $playlist->load([
-            'audios',
+            'userAudios' => fn($query) => $query->with('audio'),
         ]);
 
         return PlaylistAdapter::fromModel($playlist);

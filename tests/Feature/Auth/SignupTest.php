@@ -2,17 +2,17 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-
-class SignupTest extends TestCase
+class SignupTest extends AuthTestCase
 {
-    use RefreshDatabase;
-    
+
+    protected function route(): string
+    {
+        return parent::route() . '.signup';
+    }
+
     public function test_new_user_can_register(): void
     {
-        $response = $this->postJson('/api/auth/signup', [
+        $response = $this->postJson($this->url(), [
             'email' => 'test@example.com',
             'password' => 'password',
         ]);

@@ -17,31 +17,31 @@ Route::get('login', function() {
     return '';
 })->name('login');
 
-Route::get('test', function () {
+// Route::get('test', function () {
 
-    $me = \App\Models\User::firstOrCreate([
-        'email' => 'me@z2z.kz',
-    ], [
-        'password' => '9293',
-    ]);
+//     $me = \App\Models\User::firstOrCreate([
+//         'email' => 'me@z2z.kz',
+//     ], [
+//         'password' => '9293',
+//     ]);
 
-    $audio = Audio::firstOrCreate([
-        'name' => 'Test youtube video',
-        'source' => 'youtube',
-        'source_id' => 'youtube_video_id',
-    ]);
+//     $audio = Audio::firstOrCreate([
+//         'name' => 'Test youtube video',
+//         'source' => 'youtube',
+//         'source_id' => 'youtube_video_id',
+//     ]);
 
-    $me->audios()
-        ->sync([$audio->id]);
+//     $me->audios()
+//         ->sync([$audio->id]);
 
-    $playlist = $me
-        ->playlists()
-        ->firstOrCreate([
-            'name' => 'Favorites',
-        ]);
+//     $playlist = $me
+//         ->playlists()
+//         ->firstOrCreate([
+//             'name' => 'Favorites',
+//         ]);
 
-    $playlist->userAudios()
-        ->sync($me->userAudios);
+//     $playlist->userAudios()
+//         ->sync($me->userAudios);
 
-    dd($me->audios);
-});
+//     dd($me->audios);
+// });

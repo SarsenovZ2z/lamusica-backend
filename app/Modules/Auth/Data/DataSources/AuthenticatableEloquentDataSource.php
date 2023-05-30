@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Auth\Data\Datasources;
+namespace App\Modules\Auth\Data\DataSources;
 
 use App\Models\User;
 use App\Modules\Auth\Data\Models\AuthTokenAdapter;
@@ -10,7 +10,7 @@ use App\Modules\Auth\Domain\Entities\AuthToken;
 class AuthenticatableEloquentDataSource implements AuthenticatableDataSource
 {
     public function __construct(
-        protected User $model,
+        private User $model,
     ) {
     }
 

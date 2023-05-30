@@ -3,7 +3,7 @@
 namespace App\Modules\Auth\Data\Repositories;
 
 use App\Modules\Auth\Domain\Repositories\AuthRepository;
-use App\Modules\Auth\Data\Datasources\AuthenticatableDataSource;
+use App\Modules\Auth\Data\DataSources\AuthenticatableDataSource;
 use App\Modules\Auth\Domain\Entities\AuthToken;
 use App\Modules\Auth\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Hash;
@@ -50,7 +50,7 @@ class AuthRepositoryImpl implements AuthRepository
 
         $this->authenticatableDataSource
             ->deleteAllAuthTokens($user);
-        
+
         return $this->authenticatableDataSource
             ->createAuthToken(
                 authenticatable: $user,

@@ -4,24 +4,14 @@ namespace App\Modules\Auth;
 
 // use Illuminate\Support\Facades\Gate;
 
-use App\Modules\Auth\Data\Datasources\AuthenticatableDataSource;
-use App\Modules\Auth\Data\Datasources\AuthenticatableEloquentDataSource;
+use App\Modules\Auth\Data\DataSources\AuthenticatableDataSource;
+use App\Modules\Auth\Data\DataSources\AuthenticatableEloquentDataSource;
 use App\Modules\Auth\Data\Repositories\AuthRepositoryImpl;
 use App\Modules\Auth\Domain\Repositories\AuthRepository;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-
-    /**
-     * All of the container bindings that should be registered.
-     *
-     * @var array
-     */
-    public $bindings = [
-        AuthRepository::class => AuthRepositoryImpl::class,
-        AuthenticatableDataSource::class => AuthenticatableEloquentDataSource::class,
-    ];
 
     /**
      * The model to policy mappings for the application.
@@ -31,6 +21,22 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         //
     ];
+
+    /**
+     * Register services.
+     */
+    public function register()
+    {
+        parent::register();
+
+        $this->app->singleton(AuthenticatableDataSource::class, function ($app) {
+            return $app->make(AuthenticatableEloquentDataSource::class);
+        });
+
+        $this->app->singleton(AuthRepository::class, function ($app) {
+            return $app->make(AuthRepositoryImpl::class);
+        });
+    }
 
     /**
      * Register any authentication / authorization services.

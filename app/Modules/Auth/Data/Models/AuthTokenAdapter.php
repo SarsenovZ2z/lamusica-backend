@@ -8,7 +8,7 @@ use Laravel\Sanctum\NewAccessToken;
 class AuthTokenAdapter
 {
 
-    public static function fromModel(NewAccessToken $model) : AuthToken
+    public static function fromModel(NewAccessToken $model): AuthToken
     {
         return new AuthToken(
             accessToken: $model->plainTextToken,
@@ -16,7 +16,7 @@ class AuthTokenAdapter
         );
     }
 
-    public static function toArray(AuthToken $authToken) : array
+    public static function toArray(AuthToken $authToken): array
     {
         return [
             'access_token' => $authToken->accessToken,

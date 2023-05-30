@@ -2,42 +2,44 @@
 
 namespace App\Models;
 
+use App\Modules\Audio\Domain\Entities\HasAudios;
+use App\Modules\Audio\Domain\Entities\HasPlaylists;
 use App\Modules\Auth\Data\Models\AuthenticatableModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
-class User extends AuthenticatableModel
+class User extends AuthenticatableModel implements HasAudios, HasPlaylists
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function userAudios()
+    {
+        return $this->hasMany(UserAudio::class);
+    }
+
+    public function audios()
+    {
+        return $this->belongsToMany(Audio::class);
+    }
+
+    public function playlists()
+    {
+        return $this->hasMany(Playlist::class);
+    }
 }

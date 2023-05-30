@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Auth\Data\Datasources;
+namespace App\Modules\Auth\Data\DataSources;
 
 use App\Modules\Auth\Data\Models\AuthenticatableModel;
 use App\Modules\Auth\Domain\Entities\AuthToken;

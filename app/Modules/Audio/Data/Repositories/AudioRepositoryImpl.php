@@ -6,6 +6,7 @@ use App\Modules\Audio\Data\DataSources\AudioDataSource;
 use App\Modules\Audio\Domain\Entities\Audio;
 use App\Modules\Audio\Domain\Entities\HasAudios;
 use App\Modules\Audio\Domain\Repositories\AudioRepository;
+use Illuminate\Support\Collection;
 
 class AudioRepositoryImpl implements AudioRepository
 {
@@ -15,10 +16,17 @@ class AudioRepositoryImpl implements AudioRepository
     ) {
     }
 
-    public function findAudio(int $id)
-    {
+    public function getUserAudios(
+        HasAudios $user,
+    ): Collection {
         return $this->audioDatasource
-            ->findAudio($id);
+            ->getUserAudios($user);
     }
 
+    public function getAudio(
+        int $id,
+    ): Audio {
+        return $this->audioDatasource
+            ->getAudio($id);
+    }
 }

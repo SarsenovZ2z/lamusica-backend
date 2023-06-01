@@ -4,8 +4,16 @@ namespace App\Modules\Audio\Data\DataSources;
 
 use App\Modules\Audio\Domain\Entities\Audio;
 use App\Modules\Audio\Domain\Entities\HasAudios;
+use Illuminate\Support\Collection;
 
 interface AudioDataSource
 {
-    public function findAudio(int $id): Audio;
+
+    public function getUserAudios(
+        HasAudios $user,
+    ): Collection;
+
+    public function getAudio(
+        int $id,
+    ): Audio;
 }

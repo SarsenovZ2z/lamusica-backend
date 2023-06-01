@@ -4,7 +4,7 @@ namespace App\Modules\Audio\Domain\Usecases;
 
 use App\Modules\Audio\Domain\Repositories\PlaylistRepository;
 
-class GetPlaylists
+class GetUserPlaylists
 {
     public function __construct(
         private PlaylistRepository $playlistRepository,
@@ -12,10 +12,10 @@ class GetPlaylists
     }
 
     public function __invoke(
-        GetPlaylistsDTO $params,
+        GetUserPlaylistsDTO $params,
     ) {
         return $this->playlistRepository
-            ->getPlaylists(
+            ->getUserPlaylists(
                 user: $params->user,
             );
     }

@@ -27,7 +27,7 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         return PlaylistAdapter::fromModel(
             $this->model->create([
                 'name' => $name,
-                'user_id' => $user->id,
+                'user_id' => $user->getKey(),
             ])
         );
     }
@@ -49,14 +49,14 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         return PlaylistAdapter::fromModel($playlist);
     }
 
-    public function getPlaylists(
+    public function getUserPlaylists(
         HasPlaylists $user,
     ): Collection {
 
         Gate::authorize('viewAny', $this->model);
 
         return $this->model
-            ->where('user_id', $user->id)
+            ->where('user_id', $user->getKey())
             ->get()
             ->map(function ($playlist) {
                 Gate::authorize('view', $playlist);
@@ -85,7 +85,7 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         int $id,
     ): void {
 
-        $playlist =  $this->model
+        $playlist = $this->model
             ->findOrFail($id);
 
         Gate::authorize('delete', $playlist);

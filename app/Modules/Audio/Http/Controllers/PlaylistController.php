@@ -10,8 +10,8 @@ use App\Modules\Audio\Domain\Usecases\DeletePlaylist;
 use App\Modules\Audio\Domain\Usecases\DeletePlaylistDTO;
 use App\Modules\Audio\Domain\Usecases\GetPlaylist;
 use App\Modules\Audio\Domain\Usecases\GetPlaylistDTO;
-use App\Modules\Audio\Domain\Usecases\GetPlaylists;
-use App\Modules\Audio\Domain\Usecases\GetPlaylistsDTO;
+use App\Modules\Audio\Domain\Usecases\GetUserPlaylists;
+use App\Modules\Audio\Domain\Usecases\GetUserPlaylistsDTO;
 use App\Modules\Audio\Domain\Usecases\UpdatePlaylist;
 use App\Modules\Audio\Domain\Usecases\UpdatePlaylistDTO;
 use App\Modules\Audio\Http\Requests\CreatePlaylistRequest;
@@ -40,11 +40,11 @@ class PlaylistController extends Controller
 
     public function index(
         Request $request,
-        GetPlaylists $getPlaylists,
+        GetUserPlaylists $getPlaylists,
     ) {
         return response()->json(
             $getPlaylists(
-                new GetPlaylistsDTO(
+                new GetUserPlaylistsDTO(
                     user: $request->user(),
                 )
             )

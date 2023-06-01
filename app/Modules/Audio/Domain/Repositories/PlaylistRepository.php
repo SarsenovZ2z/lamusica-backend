@@ -18,7 +18,7 @@ interface PlaylistRepository
         string $name,
     ): Playlist;
 
-    public function getPlaylists(
+    public function getUserPlaylists(
         HasPlaylists $user,
     ): Collection;
 

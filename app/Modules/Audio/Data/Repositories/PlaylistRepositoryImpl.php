@@ -27,11 +27,11 @@ class PlaylistRepositoryImpl implements PlaylistRepository
             );
     }
 
-    public function getPlaylists(
+    public function getUserPlaylists(
         HasPlaylists $user,
     ): Collection {
         return $this->playlistDataSource
-            ->getPlaylists($user);
+            ->getUserPlaylists($user);
     }
 
     public function getPlaylist(

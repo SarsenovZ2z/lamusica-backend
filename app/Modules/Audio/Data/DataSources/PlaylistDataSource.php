@@ -19,9 +19,15 @@ interface PlaylistDataSource
         string $name,
     ): Playlist;
 
-    public function getPlaylists(HasPlaylists $user): Collection;
+    public function getUserPlaylists(
+        HasPlaylists $user,
+    ): Collection;
 
-    public function getPlaylist(int $id): Playlist;
+    public function getPlaylist(
+        int $id,
+    ): Playlist;
 
-    public function delete(int $id): void;
+    public function delete(
+        int $id,
+    ): void;
 }

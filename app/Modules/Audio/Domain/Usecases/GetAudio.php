@@ -4,7 +4,7 @@ namespace App\Modules\Audio\Domain\Usecases;
 
 use App\Modules\Audio\Domain\Repositories\AudioRepository;
 
-class FindAudio
+class GetAudio
 {
 
     public function __construct(
@@ -15,10 +15,10 @@ class FindAudio
     }
 
     public function __invoke(
-        FindAudioDTO $params,
+        GetAudioDTO $params,
     ) {
         return $this->audioRepository
-            ->findAudio(
+            ->getAudio(
                 id: $params->id,
             );
     }

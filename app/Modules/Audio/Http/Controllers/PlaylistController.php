@@ -3,17 +3,9 @@
 namespace App\Modules\Audio\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
 use App\Modules\Audio\Data\Models\PlaylistAdapter;
-use App\Modules\Audio\Domain\Usecases\CreatePlaylist;
-use App\Modules\Audio\Domain\Usecases\CreatePlaylistDTO;
-use App\Modules\Audio\Domain\Usecases\DeletePlaylist;
-use App\Modules\Audio\Domain\Usecases\DeletePlaylistDTO;
-use App\Modules\Audio\Domain\Usecases\GetPlaylist;
-use App\Modules\Audio\Domain\Usecases\GetPlaylistDTO;
-use App\Modules\Audio\Domain\Usecases\GetUserPlaylists;
-use App\Modules\Audio\Domain\Usecases\GetUserPlaylistsDTO;
-use App\Modules\Audio\Domain\Usecases\UpdatePlaylist;
-use App\Modules\Audio\Domain\Usecases\UpdatePlaylistDTO;
+use App\Modules\Audio\Domain\Repositories\PlaylistRepository;
 use App\Modules\Audio\Http\Requests\CreatePlaylistRequest;
 use App\Modules\Audio\Http\Requests\UpdatePlaylistRequest;
 use Illuminate\Http\Request;
@@ -21,75 +13,66 @@ use Illuminate\Http\Request;
 class PlaylistController extends Controller
 {
 
+    public function __construct(
+        private PlaylistRepository $playlistRepository,
+    ) {
+        $this->authorizeResource(Playlist::class, 'playlist');
+    }
+
     public function store(
         CreatePlaylistRequest $request,
-        CreatePlaylist $createPlaylist,
     ) {
         return response()->json(
-            PlaylistAdapter::toArray(
-                $createPlaylist(
-                    new CreatePlaylistDTO(
-                        user: $request->user(),
-                        name: $request->name,
-                    )
-                )
-            ),
+            $this->playlistRepository
+                ->createPlaylist(
+                    user: $request->user(),
+                    name: $request->name,
+                ),
             201
         );
     }
 
     public function index(
         Request $request,
-        GetUserPlaylists $getPlaylists,
     ) {
         return response()->json(
-            $getPlaylists(
-                new GetUserPlaylistsDTO(
+            $this->playlistRepository
+                ->getPlaylists(
                     user: $request->user(),
                 )
-            )
         );
     }
 
     public function show(
         Request $request,
-        GetPlaylist $getPlaylist,
+        Playlist $playlist,
     ) {
-        return response()->json(
-            PlaylistAdapter::toArray(
-                $getPlaylist(
-                    new GetPlaylistDTO(
-                        id: $request->playlist,
-                    )
-                )
-            )
-        );
+        return response()->json([
+            'playlist' => $playlist,
+            'audios' => [],
+        ]);
     }
 
     public function update(
         UpdatePlaylistRequest $request,
-        UpdatePlaylist $updatePlaylist,
+        Playlist $playlist,
     ) {
         return response()->json(
-            PlaylistAdapter::toArray(
-                $updatePlaylist(
-                    new UpdatePlaylistDTO(
-                        id: $request->playlist,
-                        name: $request->name,
-                    ),
-                )
-            )
+            $this->playlistRepository
+                ->updatePlaylist(
+                    playlist: PlaylistAdapter::fromModel($playlist),
+                    name: $request->name,
+                ),
         );
     }
 
     public function destroy(
         Request $request,
-        DeletePlaylist $deletePlaylist,
+        Playlist $playlist,
     ) {
-        $deletePlaylist(
-            new DeletePlaylistDTO(
-                id: $request->playlist,
-            )
-        );
+        $this->playlistRepository
+            ->deletePlaylist(
+                playlist: PlaylistAdapter::fromModel($playlist),
+            );
     }
 }

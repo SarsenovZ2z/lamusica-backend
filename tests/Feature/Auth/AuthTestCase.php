@@ -7,6 +7,7 @@ use Tests\TestCase;
 
 class AuthTestCase extends TestCase
 {
+    use RefreshDatabase;
 
     protected function route() : string
     {

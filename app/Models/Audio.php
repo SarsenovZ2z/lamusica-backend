@@ -20,4 +20,10 @@ class Audio extends Model
         return $this->belongsToMany(User::class);
     }
 
+    public function userAudios()
+    {
+        return $this->hasMany(UserAudio::class);
+    }
+
+
 }

@@ -18,7 +18,7 @@ class UpdateTest extends PlaylistTestCase
         $playlist = Playlist::factory()
             ->create();
 
-        $response = $this->putJson("/api/playlists/{$playlist->id}", [
+        $response = $this->putJson($this->url(['playlist' => $playlist]), [
             'name' => $playlist->name . '_updated',
         ]);
 
@@ -41,7 +41,7 @@ class UpdateTest extends PlaylistTestCase
         $expected = [];
 
         $response = $this->actingAs($user)
-            ->putJson("/api/playlists/{$playlist->id}", $newValues);
+            ->putJson($this->url(['playlist' => $playlist]), $newValues);
 
         $response->assertStatus(200);
         $response->assertJson($newValues);
@@ -67,10 +67,10 @@ class UpdateTest extends PlaylistTestCase
             ->first();
 
         $response = $this->actingAs($user)
-            ->putJson("/api/playlists/{$playlist->id}", [
+            ->putJson($this->url(['playlist' => $playlist]), [
                 'name' => $playlist->name . '_updated',
             ]);
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
     }
 }

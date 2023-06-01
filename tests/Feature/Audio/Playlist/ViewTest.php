@@ -32,11 +32,26 @@ class ViewTest extends PlaylistTestCase
 
         $response = $this->actingAs($user)
             ->getJson($this->url(['playlist' => $playlist]));
-        
+
         $response->assertStatus(200);
-        $response->assertJson([
-            'id' => $playlist->id,
-        ]);
+        $response->assertJsonPath('playlist.id', $playlist->id);
     }
 
+    public function test_user_cant_view_someones_playlist(): void
+    {
+        $user = User::factory()
+            ->create();
+
+        $someone = User::factory()
+            ->hasPlaylists()
+            ->create();
+
+        $playlist = $someone->playlists()
+            ->first();
+
+        $response = $this->actingAs($user)
+            ->getJson($this->url(['playlist' => $playlist]));
+
+        $response->assertForbidden();
+    }
 }

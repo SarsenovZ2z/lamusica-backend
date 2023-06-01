@@ -54,7 +54,7 @@ class DeleteTest extends PlaylistTestCase
         $response = $this->actingAs($user)
             ->deleteJson($this->url(['playlist' => $playlist]));
 
-        $response->assertStatus(403);
+        $response->assertForbidden();
         $this->assertModelExists($playlist);
     }
 }

@@ -24,4 +24,14 @@ class UserAudio extends Model
     {
         return $this->belogsTo(Audio::class);
     }
+
+    public function playlistAudios()
+    {
+        return $this->hasMany(PlaylistAudio::class);
+    }
+
+    public function playlists()
+    {
+        return $this->belongsToMany(Playlist::class);
+    }
 }

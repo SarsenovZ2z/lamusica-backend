@@ -12,7 +12,7 @@ class PlaylistTestCase extends TestCase
 
     protected function route() : string
     {
-        return 'api.playlists';
+        return 'api.playlist';
     }
 
 }

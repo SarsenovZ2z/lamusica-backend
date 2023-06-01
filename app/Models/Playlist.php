@@ -18,6 +18,11 @@ class Playlist extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function playlistAudios()
+    {
+        return $this->hasMany(PlaylistAudio::class);
+    }
+
     public function userAudios()
     {
         return $this->belongsToMany(UserAudio::class);

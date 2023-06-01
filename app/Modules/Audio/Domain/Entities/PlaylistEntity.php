@@ -2,14 +2,16 @@
 
 namespace App\Modules\Audio\Domain\Entities;
 
-use Illuminate\Support\Collection;
+use Carbon\Carbon;
 
-class Playlist
+class PlaylistEntity
 {
     public function __construct(
         public int $id,
         public string $name,
-        public Collection|null $audios,
+        public int $user_id,
+        public Carbon $created_at,
+        public Carbon $updated_at,
     ) {
     }
 }

@@ -2,45 +2,54 @@
 
 namespace App\Modules\Audio\Data\DataSources;
 
-use App\Models\Playlist as PlaylistModel;
+use App\Models\Playlist;
 use App\Modules\Audio\Data\Models\PlaylistAdapter;
 use App\Modules\Audio\Domain\Entities\HasPlaylists;
-use App\Modules\Audio\Domain\Entities\Playlist;
+use App\Modules\Audio\Domain\Entities\PlaylistEntity;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Gate;
 
 class PlaylistEloquentDataSource implements PlaylistDataSource
 {
 
     public function __construct(
-        private PlaylistModel $model,
+        private Playlist $playlistModel,
     ) {
     }
 
-    public function create(
+    public function createPlaylist(
         HasPlaylists $user,
         string $name,
-    ): Playlist {
-
-        Gate::authorize('create', $this->model);
-
+    ): PlaylistEntity {
         return PlaylistAdapter::fromModel(
-            $this->model->create([
-                'name' => $name,
-                'user_id' => $user->getKey(),
-            ])
+            $this->playlistModel
+                ->create([
+                    'user_id' => $user->getKey(),
+                    'name' => $name,
+                ])
         );
     }
 
-    public function update(
+    public function getPlaylists(
+        HasPlaylists $user,
+    ): Collection {
+        return $this->playlistModel
+            ->where('user_id', $user->id)
+            ->get();
+    }
+
+    public function getPlaylistById(
         int $id,
-        string $name,
-    ): Playlist {
-
-        $playlist = $this->model
+    ): PlaylistEntity {
+        return $this->playlistModel
             ->findOrFail($id);
+    }
 
-        Gate::authorize('update', $playlist);
+    public function updatePlaylist(
+        PlaylistEntity $playlist,
+        string $name,
+    ): PlaylistEntity {
+
+        $playlist = PlaylistAdapter::toModel($playlist);
 
         $playlist->update([
             'name' => $name,
@@ -49,47 +58,10 @@ class PlaylistEloquentDataSource implements PlaylistDataSource
         return PlaylistAdapter::fromModel($playlist);
     }
 
-    public function getUserPlaylists(
-        HasPlaylists $user,
-    ): Collection {
-
-        Gate::authorize('viewAny', $this->model);
-
-        return $this->model
-            ->where('user_id', $user->getKey())
-            ->get()
-            ->map(function ($playlist) {
-                Gate::authorize('view', $playlist);
-                return PlaylistAdapter::fromModel($playlist);
-            })
-            ->values();
-    }
-
-    public function getPlaylist(
-        int $id,
-    ): Playlist {
-
-        $playlist = $this->model
-            ->findOrFail($id);
-
-        Gate::authorize('view', $playlist);
-
-        $playlist->load([
-            'userAudios' => fn($query) => $query->with('audio'),
-        ]);
-
-        return PlaylistAdapter::fromModel($playlist);
-    }
-
-    public function delete(
-        int $id,
+    public function deletePlaylist(
+        PlaylistEntity $playlist,
     ): void {
-
-        $playlist = $this->model
-            ->findOrFail($id);
-
-        Gate::authorize('delete', $playlist);
-
-        $playlist->delete();
+        PlaylistAdapter::toModel($playlist)
+            ->delete();
     }
 }

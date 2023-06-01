@@ -20,13 +20,13 @@ class AudioServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(AudioDataSource::class, function ($app) {
-            return $app->make(AudioEloquentDataSource::class);
-        });
+        // $this->app->singleton(AudioDataSource::class, function ($app) {
+        //     return $app->make(AudioEloquentDataSource::class);
+        // });
 
-        $this->app->singleton(AudioRepository::class, function ($app) {
-            return $app->make(AudioRepositoryImpl::class);
-        });
+        // $this->app->singleton(AudioRepository::class, function ($app) {
+        //     return $app->make(AudioRepositoryImpl::class);
+        // });
 
         $this->app->singleton(PlaylistDataSource::class, function($app) {
             return $app->make(PlaylistEloquentDataSource::class);

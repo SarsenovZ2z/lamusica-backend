@@ -6,11 +6,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::group([
     'middleware' => 'auth:sanctum',
-], function() {
+], function () {
 
-    Route::resource('playlists', PlaylistController::class)
+    Route::resource('playlist', PlaylistController::class)
         ->except([
             'create', 'edit',
         ]);
-    
 });

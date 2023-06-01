@@ -3,31 +3,31 @@
 namespace App\Modules\Audio\Data\DataSources;
 
 use App\Modules\Audio\Domain\Entities\HasPlaylists;
-use App\Modules\Audio\Domain\Entities\Playlist;
+use App\Modules\Audio\Domain\Entities\PlaylistEntity;
 use Illuminate\Support\Collection;
 
 interface PlaylistDataSource
 {
 
-    public function create(
+    public function createPlaylist(
         HasPlaylists $user,
         string $name,
-    ): Playlist;
+    ): PlaylistEntity;
 
-    public function update(
-        int $id,
-        string $name,
-    ): Playlist;
-
-    public function getUserPlaylists(
+    public function getPlaylists(
         HasPlaylists $user,
     ): Collection;
 
-    public function getPlaylist(
+    public function getPlaylistById(
         int $id,
-    ): Playlist;
+    ): PlaylistEntity;
 
-    public function delete(
-        int $id,
+    public function updatePlaylist(
+        PlaylistEntity $playlist,
+        string $name,
+    ): PlaylistEntity;
+
+    public function deletePlaylist(
+        PlaylistEntity $playlist,
     ): void;
 }

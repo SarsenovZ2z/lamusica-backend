@@ -34,7 +34,7 @@ class ViewTest extends PlaylistTestCase
             ->getJson($this->url(['playlist' => $playlist]));
 
         $response->assertStatus(200);
-        $response->assertJsonPath('playlist.id', $playlist->id);
+        $response->assertJsonPath('id', $playlist->id);
     }
 
     public function test_user_cant_view_someones_playlist(): void

@@ -2,15 +2,14 @@
 
 namespace App\Models;
 
-use App\Modules\Audio\Domain\Entities\HasAudios;
-use App\Modules\Audio\Domain\Entities\HasPlaylists;
-use App\Modules\Auth\Data\Models\AuthenticatableModel;
+use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends AuthenticatableModel implements HasAudios, HasPlaylists
+class User extends AuthenticatableUser
 {
-    use HasFactory, Notifiable;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $fillable = [
         'name',

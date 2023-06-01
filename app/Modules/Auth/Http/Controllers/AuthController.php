@@ -3,37 +3,37 @@
 namespace App\Modules\Auth\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Auth\Data\Models\AuthTokenAdapter;
+use App\Models\User;
 use App\Modules\Auth\Http\Requests\SigninRequest;
 use App\Modules\Auth\Http\Requests\SignupRequest;
-use App\Modules\Auth\Domain\Usecases\Signin;
-use App\Modules\Auth\Domain\Usecases\SigninDTO;
-use App\Modules\Auth\Domain\Usecases\Signup;
-use App\Modules\Auth\Domain\Usecases\SignupDTO;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
 
-    public function signup(SignupRequest $request, Signup $signup)
+    public function signup(SignupRequest $request)
     {
-        $isCreated = $signup(
-            new SignupDTO(
-                email: $request->email,
-                password: $request->password,
-            )
-        );
+        $user = User::firstOrCreate([
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
     }
 
-    public function signin(SigninRequest $request, Signin $signin)
+    public function signin(SigninRequest $request)
     {
-        $token = $signin(
-            new SigninDTO(
-                email: $request->email,
-                password: $request->password,
-                deviceName: $request->deviceName ?? 'unknown',
-            )
-        );
+        $user = User::whereEmail($request->email)->first();
 
-        return AuthTokenAdapter::toArray($token);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        return response()->json([
+            'access_token' => $user->createToken($request->device_name ?? 'unknown')
+                ->plainTextToken,
+            'refresh_token' => null,
+        ]);
     }
 }

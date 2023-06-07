@@ -19,7 +19,7 @@ class ViewTest extends PlaylistTestCase
 
         $response = $this->getJson($this->url(['playlist' => $playlist]));
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 
     public function test_user_can_view_playlist(): void

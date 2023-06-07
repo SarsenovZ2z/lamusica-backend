@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('source');
             $table->string('source_id');
 
+            $table->unique(['source', 'source_id']);
+
             $table->timestamps();
         });
     }

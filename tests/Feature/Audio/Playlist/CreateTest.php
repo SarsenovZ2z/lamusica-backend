@@ -7,7 +7,7 @@ use App\Models\User;
 class CreateTest extends PlaylistTestCase
 {
 
-    protected function route() : string
+    protected function route(): string
     {
         return parent::route() . '.store';
     }
@@ -18,7 +18,7 @@ class CreateTest extends PlaylistTestCase
             'name' => 'Test Playlist',
         ]);
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 
     public function test_user_can_create_playlist(): void
@@ -33,5 +33,4 @@ class CreateTest extends PlaylistTestCase
 
         $response->assertStatus(201);
     }
-
 }

@@ -9,8 +9,8 @@ Route::group([
     'middleware' => 'auth:sanctum',
 ], function () {
     Route::resource('audio', AudioController::class)
-        ->only([
-            'index', 'store', 'destroy',
+        ->except([
+            'create', 'edit',' view',
         ]);
 });
 

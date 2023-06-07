@@ -22,7 +22,7 @@ class UpdateTest extends PlaylistTestCase
             'name' => $playlist->name . '_updated',
         ]);
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 
     public function test_user_can_update_playlist(): void

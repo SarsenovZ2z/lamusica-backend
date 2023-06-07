@@ -19,7 +19,7 @@ class AudioFactory extends Factory
         return [
             'name' => fake()->words(4, true),
             'source' => 'youtube',
-            'source_id' => 'youtube_video_id',
+            'source_id' => 'youtube_video_id_' . fake()->unique()->word(),
         ];
     }
 }

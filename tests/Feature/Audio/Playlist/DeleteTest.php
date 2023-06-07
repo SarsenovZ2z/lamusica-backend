@@ -20,7 +20,7 @@ class DeleteTest extends PlaylistTestCase
 
         $response = $this->deleteJson($this->url(['playlist' => $playlist]));
 
-        $response->assertStatus(401);
+        $response->assertUnauthorized();
     }
 
     public function test_user_can_delete_playlist(): void

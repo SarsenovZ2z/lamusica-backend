@@ -41,7 +41,6 @@ class PlaylistController extends Controller
     }
 
     public function show(
-        Request $request,
         Playlist $playlist,
     ) {
         $playlist->load([
@@ -67,7 +66,6 @@ class PlaylistController extends Controller
     }
 
     public function destroy(
-        Request $request,
         Playlist $playlist,
     ) {
         $playlist->delete();

@@ -3,16 +3,39 @@
 namespace App\Modules\Audio\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Modules\Audio\Domain\Usecases\AddAudio;
-use App\Modules\Audio\Domain\Usecases\AddAudioDTO;
-use Illuminate\Http\Request;
+use App\Models\Audio;
+use App\Modules\Audio\Http\Requests\CreateAudioRequest;
+use App\Modules\Audio\Http\Resources\AudioResource;
 
 class AudioController extends Controller
 {
 
-    public function getCurrentUserAudios(Request $request)
+    public function __construct()
     {
-        return [];
+        $this->authorizeResource(Audio::class, 'audio');
     }
 
+    public function index()
+    {
+        $query = Audio::query();
+
+
+        return AudioResource::collection(
+            $query->paginate(10)
+        );
+    }
+
+    public function store(CreateAudioRequest $request)
+    {
+        $audio = Audio::create([
+            'name' => $request->name,
+            'source' => $request->source,
+            'source_id' => $request->source_id,
+        ]);
+    }
+
+    public function destroy(Audio $audio)
+    {
+        $audio->delete();
+    }
 }

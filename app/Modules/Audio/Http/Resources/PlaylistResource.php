@@ -16,7 +16,7 @@ class PlaylistResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getName(),
+            'name' => $this->name,
             'pos' => $this->pos,
             'audios' => PlaylistAudioResource::collection($this->whenLoaded('audios')),
             'created_at' => $this->created_at,

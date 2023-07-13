@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Modules\Auth\Http\Requests\SigninRequest;
 use App\Modules\Auth\Http\Requests\SignupRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -17,6 +18,7 @@ class AuthController extends Controller
         $user = User::firstOrCreate([
             'email' => $request->email,
             'password' => $request->password,
+            'name' => $request->name,
         ]);
     }
 
@@ -34,6 +36,17 @@ class AuthController extends Controller
             'access_token' => $user->createToken($request->device_name ?? 'unknown')
                 ->plainTextToken,
             'refresh_token' => null,
+        ]);
+    }
+
+    public function signout(Request $request)
+    {
+        $user = $request->user();
+
+
+
+        return response()->json([
+            'success' => true,
         ]);
     }
 }

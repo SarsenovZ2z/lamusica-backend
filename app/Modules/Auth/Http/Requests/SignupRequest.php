@@ -24,6 +24,7 @@ class SignupRequest extends FormRequest
         return [
             'email' => 'required|email|between:5,100',
             'password' => 'required|between:4,20',
+            'name' => 'required|between:1,50',
         ];
     }
 }

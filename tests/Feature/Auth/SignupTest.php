@@ -15,6 +15,7 @@ class SignupTest extends AuthTestCase
         $response = $this->postJson($this->url(), [
             'email' => 'test@example.com',
             'password' => 'password',
+            'name' => 'Test User',
         ]);
 
         $response->assertStatus(200);

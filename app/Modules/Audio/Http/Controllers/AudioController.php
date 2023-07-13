@@ -25,8 +25,9 @@ class AudioController extends Controller
         );
     }
 
-    public function store(CreateAudioRequest $request)
-    {
+    public function store(
+        CreateAudioRequest $request,
+    ) {
         $audio = Audio::firstOrCreate([
             'source' => $request->source,
             'source_id' => $request->source_id,
@@ -40,8 +41,10 @@ class AudioController extends Controller
         );
     }
 
-    public function update(UpdateAudioRequest $request, Audio $audio)
-    {
+    public function update(
+        UpdateAudioRequest $request,
+        Audio $audio,
+    ) {
         $audio->update([
             'name' => $request->name,
         ]);
@@ -51,8 +54,9 @@ class AudioController extends Controller
         );
     }
 
-    public function destroy(Audio $audio)
-    {
+    public function destroy(
+        Audio $audio,
+    ) {
         $audio->delete();
     }
 }

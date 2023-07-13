@@ -9,4 +9,6 @@ Route::group([
 ], function() {
     Route::post('signup', [AuthController::class, 'signup'])->name('signup');
     Route::post('signin', [AuthController::class, 'signin'])->name('signin');
+    Route::post('signout', [AuthController::class, 'signout'])->name('signout')
+        ->middleware('auth:sanctum');
 });

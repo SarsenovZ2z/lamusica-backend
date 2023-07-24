@@ -165,6 +165,7 @@ return [
          */
         App\Modules\Auth\AuthServiceProvider::class,
         App\Modules\Audio\AudioServiceProvider::class,
+        App\Modules\Push\PushServiceProvider::class,
 
         /*
          * Application Service Providers...

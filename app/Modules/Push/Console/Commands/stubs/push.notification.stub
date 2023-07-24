@@ -1,0 +1,28 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Modules\Push\Notifications\PushNotification;
+
+class {{ class }} extends PushNotification
+{
+
+    /**
+     * Create a new notification instance.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * @param object $notifiable
+     * 
+     * @return PushMessage
+     */
+    public function toPush(object $notifiable): PushMessage
+    {
+        throw new \Exception('Not implemented');
+    }
+
+}

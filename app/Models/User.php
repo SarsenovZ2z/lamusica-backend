@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Modules\Push\Concerns\HasPushTokens;
 use App\Modules\Push\Contracts\HasPushTokens as HasPushTokensContract;
 use App\Modules\Push\Contracts\PushToken;
+use App\Modules\Push\Providers\FCM\FCMPushToken;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -69,7 +70,7 @@ class User extends AuthenticatableUser implements HasPushTokensContract
     public function getPushTokens(): array
     {
         return [
-            // new FCMPushToken(token: 'fWayVeOdbUvfu10YdOqoCu:APA91bHXsJ9Mp0WVX7lE5jsH_PzENJ6AkH7_GkcTGjNyrQFPeT7cCbROIleNbL7pQOQhHkAEmqEvSG4IWZ29GYiupIBw7Yt-FbvMI3zoq68T_fVo6Apc78QuBc_T12sC8YWY3WsUttav'),
+            new FCMPushToken(token: 'fWayVeOdbUvfu10YdOqoCu:APA91bHXsJ9Mp0WVX7lE5jsH_PzENJ6AkH7_GkcTGjNyrQFPeT7cCbROIleNbL7pQOQhHkAEmqEvSG4IWZ29GYiupIBw7Yt-FbvMI3zoq68T_fVo6Apc78QuBc_T12sC8YWY3WsUttav'),
         ];
     }
 }

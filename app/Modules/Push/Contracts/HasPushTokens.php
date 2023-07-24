@@ -3,7 +3,7 @@
 namespace App\Modules\Push\Contracts;
 
 use App\Modules\Push\Contracts\PushToken;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 interface HasPushTokens
 {

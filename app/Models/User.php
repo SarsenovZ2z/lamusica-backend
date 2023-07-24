@@ -5,8 +5,7 @@ namespace App\Models;
 use App\Modules\Push\Concerns\HasPushTokens;
 use App\Modules\Push\Contracts\HasPushTokens as HasPushTokensContract;
 use App\Modules\Push\Contracts\PushToken;
-use App\Modules\Push\Providers\FCM\FCMPushToken;
-use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
@@ -49,17 +48,22 @@ class User extends AuthenticatableUser implements HasPushTokensContract
 
     public function loadPushTokens(): void
     {
-        //
+        // TODO: load tokens
+
+        // $query->load('pushTokens');
     }
 
     public function scopeWithPushTokens(Builder $query): void
     {
-        //
+        // TODO: something like
+        // $query->with(['pushTokens' => function ($query) {
+        //     $query->latest()->take(5);
+        // }]);
     }
 
     public function setPushToken(PushToken $token): void
     {
-        //
+        // TODO: add push token
     }
 
     public function getPushTokens(): array

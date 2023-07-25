@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Push\Providers\FCM;
+namespace App\Modules\Push\Drivers\FCM;
 
 use App\Modules\Push\Contracts\PushToken;
 

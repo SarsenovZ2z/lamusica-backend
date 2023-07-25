@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Push\Providers\APN;
+namespace App\Modules\Push\Drivers\APN;
 
 use App\Modules\Push\Contracts\PushToken;
 

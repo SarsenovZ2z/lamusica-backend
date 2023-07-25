@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Modules\Push\Providers\FCM;
+namespace App\Modules\Push\Drivers\FCM;
 
-use App\Modules\Push\Contracts\FCMService as FCMServiceContract;
+use App\Modules\Push\Contracts\PushDriver;
+use App\Modules\Push\Contracts\PushToken;
 use App\Modules\Push\Contracts\PushTopic;
 use App\Modules\Push\PushMessage;
 use Illuminate\Support\Facades\Http;
 
-class FCMService implements FCMServiceContract
+class FCMService implements PushDriver
 {
 
     public function __construct(
@@ -15,16 +16,21 @@ class FCMService implements FCMServiceContract
     ) {
     }
 
+    public function isValidDeviceToken(PushToken $token): bool
+    {
+        return $token instanceof FCMPushToken;
+    }
+
     public function sendToDevices(
         array $tokens,
         PushMessage $message,
     ): void {
-        $tokens = array_filter($tokens, fn ($token) => $token instanceof FCMPushToken);
-        $tokens = array_map(fn (FCMPushToken $token) => $token->getToken(), $tokens);
-
         if (empty($tokens)) {
             return;
         }
+
+        $tokens = array_map(fn (FCMPushToken $token) => $token->getToken(), $tokens);
+
 
         $response = $this->request(
             'https://fcm.googleapis.com/fcm/send',
@@ -38,7 +44,6 @@ class FCMService implements FCMServiceContract
                         ...$message->getData(),
                     ],
                 ],
-
             ]
         );
     }
@@ -47,14 +52,20 @@ class FCMService implements FCMServiceContract
         PushTopic $topic,
         PushMessage $message,
     ): void {
+        //
     }
 
     protected function request(string $url, array $data = [])
     {
         return Http::withHeaders([
-            'Authorization' => "key={$this->config['api_key']}",
+            'Authorization' => "key={$this->getApiKey()}",
         ])
             ->post($url, $data)
             ->json();
+    }
+
+    protected function getApiKey()
+    {
+        return $this->config['api_key'];
     }
 }

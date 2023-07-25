@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Modules\Push\Concerns\HasPushTokens;
 use App\Modules\Push\Contracts\HasPushTokens as HasPushTokensContract;
 use App\Modules\Push\Contracts\PushToken;
-use App\Modules\Push\Providers\FCM\FCMPushToken;
+use App\Modules\Push\Drivers\FCM\FCMPushToken;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as AuthenticatableUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

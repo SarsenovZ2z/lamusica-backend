@@ -2,36 +2,53 @@
 
 namespace App\Modules\Push;
 
-use App\Modules\Push\Contracts\APNService;
-use App\Modules\Push\Contracts\FCMService;
+use App\Modules\Push\Contracts\PushDriver;
+use App\Modules\Push\Contracts\PushToken;
 use App\Modules\Push\Contracts\PushTopic;
-use App\Modules\Push\Providers\APN\APNPushToken;
-use App\Modules\Push\Providers\FCM\FCMPushToken;
-use Illuminate\Support\Facades\Log;
 
 class PushService
 {
 
+    /**
+     * @var array<PushDriver>
+     */
+    protected array $drivers;
+
     public function __construct(
         protected array $config,
-        protected FCMService $fcm,
-        protected APNService $apn,
     ) {
+        $this->drivers = array_map(
+            function ($driver) {
+                return app()->makeWith($driver['class'], [
+                    'config' => $driver['config'] ?? [],
+                ]);
+            },
+            $this->config['drivers'] ?? []
+        );
     }
 
     public function sendToDevices(
         array $tokens,
         PushMessage $message,
     ): void {
-        $this->fcm
-            ->sendToDevices($tokens, $message);
+        foreach ($this->drivers as $driver) {
+            $filteredTokens = array_filter(
+                $tokens,
+                fn (PushToken $token) => $driver->isValidDeviceToken($token)
+            );
 
-        // $this->apn
-        //     ->sendToDevices($tokens, $message);
+            if (empty($filteredTokens)) {
+                continue;
+            }
+
+            $driver->sendToDevices($filteredTokens, $message);
+        }
     }
 
     public function sendToTopic(PushTopic $topic, PushMessage $message): void
     {
-        //
+        foreach ($this->drivers as $driver) {
+            $driver->sendToTopic($topic, $message);
+        }
     }
 }

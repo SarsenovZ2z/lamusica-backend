@@ -2,8 +2,6 @@
 
 namespace App\Modules\Push;
 
-use App\Modules\Push\Contracts\PushTopic;
-
 class PushMessage
 {
 

@@ -9,7 +9,7 @@ interface HasPushTokens
 {
 
     /**
-     * @param $query
+     * @param Builder $query
      * 
      * @return void
      */

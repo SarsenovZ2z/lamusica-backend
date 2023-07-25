@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Audio;
-use App\Notifications\WelcomePushNotification;
 use Illuminate\Support\Facades\Route;
 
 /*

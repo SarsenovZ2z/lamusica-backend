@@ -16,11 +16,11 @@ class {{ class }} extends PushNotification
     }
 
     /**
-     * @param object $notifiable
-     * 
+     * @param $notifiable
+     *
      * @return PushMessage
      */
-    public function toPush(object $notifiable): PushMessage
+    public function toPush($notifiable): PushMessage
     {
         throw new \Exception('Not implemented');
     }

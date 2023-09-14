@@ -7,6 +7,6 @@ use App\Modules\Push\PushMessage;
 interface PushNotification
 {
 
-    public function toPush(object $notifiable): PushMessage;
+    public function toPush($notifiable): PushMessage;
 
 }
